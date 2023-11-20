@@ -9,7 +9,7 @@ function principal() {
 
     let distancia_percorrida = 0;
     let taxa_dificuldade = 0;
-    let i = 3; // contador para utilizar na distância percorrida
+    let i = 1; // contador para utilizar na distância percorrida
 
     let src_nave = "imagens/nave-humano.png";
     let x_inicial_nave = 10;
@@ -57,10 +57,10 @@ function principal() {
     imagemFundo.src = 'imagens/universo.png';
 
     function atualizar_dificuldade() {
-        distancia_percorrida += 10;
-        if (distancia_percorrida == 10**i && i < 6) {
+        distancia_percorrida += 1;
+        if (distancia_percorrida == 1000*i && i <= 7) {
             i += 1;
-            taxa_dificuldade += 2;
+            taxa_dificuldade += 0.25;
             for (obj of objetos) {
                 obj.v += taxa_dificuldade;
             }
