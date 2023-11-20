@@ -59,7 +59,7 @@ function principal() {
     let apertou_play = false;
 
     const musica1 = new Audio('sons/Flying - Track Tribe.mp3');
-    musica1.volume = 0.4;
+    musica1.volume = 0.0;
     const musica2 = new Audio('sons/Hidden Frozen Lake - Go By Ocean _ Ryan McCaffrey.mp3');
     const musica3 = new Audio('sons/Outreach - Go By Ocean _ Ryan McCaffrey.mp3');
     const musica4 = new Audio('sons/Speak The Truth - Go By Ocean _ Ryan McCaffrey.mp3');
@@ -209,10 +209,12 @@ function principal() {
     function atualizar_info() {
         ctxInfo.clearRect(0, 0, canvasInfo.width, canvasInfo.height);
         ctxInfo.font = "20px Arial";
-        ctxInfo.fillStyle = "blue";
+        ctxInfo.fillStyle = "black";
         ctxInfo.textAlign = "center";
-        ctxInfo.fillText(`Distância percorrida: ${distancia_percorrida} |
-        Munição: ${nave.municao}`, canvasInfo.width / 2, canvasInfo.height / 2);
+        ctxInfo.fillText(`Distância percorrida:`, 100, 40);
+        ctxInfo.fillText(`${distancia_percorrida}`, 230, 40);
+        ctxInfo.fillText(`Munição:`, 50, 70);
+        ctxInfo.fillText(`${nave.municao}`, 115, 70);
     }
 
     function carregar_menu() {
