@@ -40,6 +40,12 @@ function principal() {
     let y_inicial_astronauta = gerar_n_aleatorio(0, canvas.height-85+1);
     let v_astronauta = 1;
 
+    let src_municao = "imagens/municao.png"
+    let taxa_municao = 9;
+    let x_inicial_municao = gerar_n_aleatorio(canvas.width, taxa_satelite*canvas.width);
+    let y_inicial_municao = gerar_n_aleatorio(0, canvas.height-85+1);
+    let v_municao = 2;
+
     const imagemFundo = new Image();
     imagemFundo.src = 'imagens/universo.png';
 
@@ -51,11 +57,16 @@ function principal() {
         let cont = 1; // para identificar o meteoro gigante
         for (obj of objetos){
             if ( (obj.x <= nave.x + nave.imagem.width) && ( (nave.y >= obj.y && nave.y <= obj.y + obj.imagem.height) || (nave.y + nave.imagem.height <= obj.y + obj.imagem.height && nave.y + nave.imagem.height >=  obj.y) ) ) {
-                nave.nave_atingida = true;
+                if (cont != 4) {
+                    nave.nave_atingida = true;
+                } else {
+                    nave.municao += 3;
+                    obj.eh_municao = true;
+                }
             }
             if ( (obj.x <= nave.pos_x_tiro + nave.imagem_tiro.width) && ( (nave.altura_tiro >= obj.y && nave.altura_tiro <= obj.y + obj.imagem.height) || (nave.altura_tiro + nave.imagem_tiro.height <= obj.y + obj.imagem.height && nave.altura_tiro + nave.imagem_tiro.height >=  obj.y) ) ) {
                 nave.tiro_acertou = true;
-                if (cont != 5) { // o meteoro gigante é o único que ignora o tiro
+                if (cont != 6 && cont != 4) { // o meteoro gigante é o único que ignora o tiro
                     obj.tiro_acertou = true;
                 }
             } 
@@ -205,7 +216,8 @@ function principal() {
             this.y = y;
             this.v = v;
             this.t = t;
-            this.tiro_acertou = false; 
+            this.tiro_acertou = false;
+            this.eh_municao = false; 
         }
         
         desenhar() {
@@ -219,6 +231,11 @@ function principal() {
                 this.y = gerar_n_aleatorio(0, canvas.height-85+1);
                 this.tiro_acertou = false;
             }
+            if  (this.eh_municao == true) {
+                this.eh_municao = false;
+                this.x = gerar_n_aleatorio(canvas.width, this.t*canvas.width);
+                this.y = gerar_n_aleatorio(0, canvas.height-85+1);
+            }
         }
     }
     
@@ -229,8 +246,9 @@ function principal() {
     let satelite = new Objeto(src_satelite, x_inicial_satelite, y_inicial_satelite, v_satelite, taxa_satelite);
     let astronauta = new Objeto(src_astronauta, x_inicial_astronauta, y_inicial_astronauta, v_astronauta, taxa_astronauta);
     let meteoro2 = new Objeto(src_meteoro2, x_inicial_meteroro2, y_inicial_meteoro2, v_meteoro2, taxa_meteoro2);
+    let municao = new Objeto(src_municao, x_inicial_municao, y_inicial_municao, v_municao, taxa_municao);
 
-    let objetos = [astronauta, satelite, meteoro3 ,meteoro1, meteoro2];
+    let objetos = [astronauta, satelite, meteoro3, municao ,meteoro1, meteoro2];
 
     imagemFundo.onload = nave.imagem.onload = objetos[0].imagem.onload = objetos[1].imagem.onload = objetos[2].imagem.onload = objetos[3].imagem.onload = objetos[4].imagem.onload = rodar_jogo;
 }
