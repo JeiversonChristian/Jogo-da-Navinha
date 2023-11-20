@@ -58,7 +58,7 @@ function principal() {
 
     let apertou_play = false;
 
-    let volume = 0.1;
+    let musica_atual = 1
     const musica1 = new Audio('sons/Flying - Track Tribe.mp3');
     musica1.volume = 0.3;
     const musica2 = new Audio('sons/Hidden Frozen Lake - Go By Ocean _ Ryan McCaffrey.mp3');
@@ -68,6 +68,8 @@ function principal() {
     const som_explosão_forte = new Audio('sons/Big Explosion Cut Off.mp3');
     const som_municao = new Audio('sons/Beep Short .mp3');
     const som_grito = new Audio('sons/Death Impact Yell Single.mp3');
+
+    let musica = musica1;
 
     function handleClique(event) {
         let largura = 300;
@@ -175,6 +177,9 @@ function principal() {
         }   
     }
 
+    let seta_direita_acionada = false;
+    let seta_esquerda_acionada = false;
+
     function verificar_teclas() {
         window.addEventListener('keydown', function (event) {
             if (event.code === 'Space') {
@@ -205,9 +210,36 @@ function principal() {
                 aumentar_volume();
             }
         });
+
         window.addEventListener('keydown', function (event) {
             if (event.key === 'ArrowDown') {
                 diminuir_volume();
+            }
+        });
+
+        window.addEventListener('keydown', function (event) {
+            if (event.key === 'ArrowRight' && !seta_direita_acionada) {
+                seta_direita_acionada = true;
+                trocar_para_proxima_musica();
+            }
+        });
+        document.addEventListener('keyup', function(event) {
+            if (event.key === 'ArrowRight') {
+                // Redefine a variável de controle quando a tecla é liberada
+                seta_direita_acionada = false;
+            }
+        });
+
+        window.addEventListener('keydown', function (event) {
+            if (event.key === 'ArrowLeft' && !seta_esquerda_acionada) {
+                seta_esquerda_acionada = true;
+                trocar_para_anterior_musica();
+            }
+        });
+        document.addEventListener('keyup', function(event) {
+            if (event.key === 'ArrowLeft') {
+                // Redefine a variável de controle quando a tecla é liberada
+                seta_esquerda_acionada = false;
             }
         });
     }
@@ -278,16 +310,75 @@ function principal() {
         }
     }
 
+    function trocar_para_proxima_musica() {
+        musica.pause()
+        musica.currentTime = 0;
+
+        if (musica_atual + 1 == 5) {
+            musica_atual = 1;
+        } else { 
+            musica_atual += 1;
+        }
+
+        switch (musica_atual) {
+            case 1:
+                musica = musica1;
+                break;
+            case 2:
+                musica = musica2;
+                break;
+            case 3:
+                musica = musica3;
+                break;
+            case 4:
+                musica = musica4;
+                break;
+            default:
+                musica = musica1;
+        }
+        tocar_musica()
+    }
+    
+    function trocar_para_anterior_musica() {
+        musica.pause()
+        musica.currentTime = 0;
+
+        if (musica_atual - 1 == 0) {
+            musica_atual = 4;
+        } else { 
+            musica_atual -= 1;
+        }
+        
+        switch (musica_atual) {
+            case 1:
+                musica = musica1;
+                break;
+            case 2:
+                musica = musica2;
+                break;
+            case 3:
+                musica = musica3;
+                break;
+            case 4:
+                musica = musica4;
+                break;
+            default:
+                musica = musica1;
+        }
+        
+        tocar_musica()
+    }
+
     function tocar_musica() {
-        musica1.play();
+        musica.play();
     }
     
     function rodar_jogo() {
-        tocar_musica();
         if(apertou_play == false) {
             carregar_menu();
         }
-        if(apertou_play == true) {     
+        if(apertou_play == true) {
+            tocar_musica();     
             atualizar_dificuldade();
             verificar_colisao();
             desenhar_fundo();
