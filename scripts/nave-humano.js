@@ -202,9 +202,36 @@ function principal() {
         desenharBotao();
         canvas.addEventListener('mousedown', handleClique);  
     }
+
+    function resetar_nave() {
+        nave = new Nave(src_nave,x_inicial_nave,y_inicial_nave,impulso_nave);
+    }
+
+    function resetar_objetos() {
+        meteoro1 = new Objeto(src_meteoro1,x_inicial_meteroro1,y_inicial_meteoro1,v_meteoro1, taxa_meteoro1);
+        meteoro3 = new Objeto(src_meteoro3,x_inicial_meteroro3,y_inicial_meteoro3,v_meteoro3,taxa_meteoro3);
+        satelite = new Objeto(src_satelite, x_inicial_satelite, y_inicial_satelite, v_satelite, taxa_satelite);
+        astronauta = new Objeto(src_astronauta, x_inicial_astronauta, y_inicial_astronauta, v_astronauta, taxa_astronauta);
+        meteoro2 = new Objeto(src_meteoro2, x_inicial_meteroro2, y_inicial_meteoro2, v_meteoro2, taxa_meteoro2);
+        municao = new Objeto(src_municao, x_inicial_municao, y_inicial_municao, v_municao, taxa_municao);
+
+        objetos = [astronauta, satelite, meteoro3, municao ,meteoro1, meteoro2];
+    }
+
+    function resetar_dados() {
+        distancia_percorrida = 0;
+    }
+
+    function resetar_game() {
+        apertou_play = false;
+        resetar_nave();
+        resetar_objetos();
+        resetar_dados();
+
+    }
     
     function rodar_jogo() {
-        if(apertou_play == false){
+        if(apertou_play == false) {
             carregar_menu();
         }
         if(apertou_play == true) {     
@@ -213,10 +240,11 @@ function principal() {
             desenhar_fundo();
             desenhar_objetos();
             verificar_teclas();
-            if (nave.nave_atingida == false){
-                atualizar_todas_posicoes();
-            }
+            atualizar_todas_posicoes();
             atualizar_info();
+            if (nave.nave_atingida == true) {
+                resetar_game();
+            }
         }
         setTimeout(rodar_jogo, 60); 
     }
