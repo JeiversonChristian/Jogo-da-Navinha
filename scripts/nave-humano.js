@@ -8,6 +8,7 @@ function principal() {
     let x_inicial_nave = 10;
     let y_inicial_nave = canvas.height-53;
     let impulso_nave = 5;
+    let src_tiro = "imagens/tiro.png"
 
     let src_meteoro1 = "imagens/meteoro1.png";
     let taxa_meteoro1 = 1.5;
@@ -51,6 +52,7 @@ function principal() {
             if ( (obj.x <= nave.x + nave.imagem.width) && ( (nave.y >= obj.y && nave.y <= obj.y + obj.imagem.height) || (nave.y + nave.imagem.height <= obj.y + obj.imagem.height && nave.y + nave.imagem.height >=  obj.y) ) ) {
                 nave.nave_atingida = true;
             }
+
         }
     }
 
@@ -124,6 +126,9 @@ function principal() {
             this.altura_tiro  = this.y + 20;
             this.pos_x_tiro = this.x + 85;
             this.vt = 5;
+            this.tiro_acertou = false;
+            this.imagem_tiro = new Image();
+            this.imagem_tiro.src = src_tiro;
         }
 
         desenhar() {
@@ -157,11 +162,8 @@ function principal() {
                 }
             }
             if (this.atirou == true) {
-                ctx.fillStyle = 'white';
-                ctx.beginPath();
-                ctx.arc(this.pos_x_tiro, this.altura_tiro, 5, 0, 2 * Math.PI); // centro (x,y), raio, angulo incial e final (0 a 2pi)
+                ctx.drawImage(this.imagem_tiro, this.pos_x_tiro, this.altura_tiro);
                 this.pos_x_tiro += this.vt;
-                ctx.fill();
             }
         }
     }
@@ -175,7 +177,8 @@ function principal() {
             this.x = x;
             this.y = y;
             this.v = v;
-            this.t = t; 
+            this.t = t;
+            this.tiro_acertou = false; 
         }
         
         desenhar() {
@@ -184,7 +187,7 @@ function principal() {
         
         atualizar_posicao() {
             this.x -= this.v;
-            if (this.x + this.imagem.width < -5) {
+            if ((this.x + this.imagem.width < -5) || (this.tiro_acertou == true)) {
                 this.x = gerar_n_aleatorio(canvas.width, this.t*canvas.width);
                 this.y = gerar_n_aleatorio(0, canvas.height-85+1);
             }
