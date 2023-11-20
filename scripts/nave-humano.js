@@ -58,8 +58,9 @@ function principal() {
 
     let apertou_play = false;
 
+    let volume = 0.1;
     const musica1 = new Audio('sons/Flying - Track Tribe.mp3');
-    musica1.volume = 0.0;
+    musica1.volume = 0.3;
     const musica2 = new Audio('sons/Hidden Frozen Lake - Go By Ocean _ Ryan McCaffrey.mp3');
     const musica3 = new Audio('sons/Outreach - Go By Ocean _ Ryan McCaffrey.mp3');
     const musica4 = new Audio('sons/Speak The Truth - Go By Ocean _ Ryan McCaffrey.mp3');
@@ -192,12 +193,25 @@ function principal() {
                 nave.pode_atirar = true;
             }
         });
+
         window.addEventListener('keyup', function (event) {
             if (event.key === 'k') {
                 nave.pode_atirar = false;
             }
         });
+
+        window.addEventListener('keydown', function (event) {
+            if (event.key === 'ArrowUp') {
+                aumentar_volume();
+            }
+        });
+        window.addEventListener('keydown', function (event) {
+            if (event.key === 'ArrowDown') {
+                diminuir_volume();
+            }
+        });
     }
+
 
     function atualizar_todas_posicoes() {
         nave.atualizar_posicao();
@@ -211,10 +225,13 @@ function principal() {
         ctxInfo.font = "20px Arial";
         ctxInfo.fillStyle = "black";
         ctxInfo.textAlign = "center";
-        ctxInfo.fillText(`Distância percorrida:`, 100, 40);
-        ctxInfo.fillText(`${distancia_percorrida}`, 230, 40);
-        ctxInfo.fillText(`Munição:`, 50, 70);
-        ctxInfo.fillText(`${nave.municao}`, 115, 70);
+        ctxInfo.fillText(`Distância percorrida:`, 150, 40);
+        ctxInfo.fillText(`${distancia_percorrida}km`, 290, 40);
+        ctxInfo.fillText(`Munição:`, 100, 70);
+        ctxInfo.fillText(`${nave.municao}`, 165, 70);
+        ctxInfo.fillText(`Subir: Aperte [Espaço]`, 495, 40); //395
+        ctxInfo.fillText(`Atirar: Aperte [k]`, 465, 70);
+        ctxInfo.fillText(`Aumentar / Diminuir música [↑][↓]`, 800, 40);
     }
 
     function carregar_menu() {
@@ -248,9 +265,25 @@ function principal() {
         resetar_dados();
 
     }
+
+    function aumentar_volume() {
+        if (musica1.volume < 1.0) {
+            musica1.volume += 0.0001;
+        }
+    }
+
+    function diminuir_volume() {
+        if (musica1.volume > 0.0) {
+            musica1.volume -= 0.0001;
+        }
+    }
+
+    function tocar_musica() {
+        musica1.play();
+    }
     
     function rodar_jogo() {
-        musica1.play();
+        tocar_musica();
         if(apertou_play == false) {
             carregar_menu();
         }
