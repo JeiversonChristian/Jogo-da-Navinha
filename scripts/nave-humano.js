@@ -58,6 +58,16 @@ function principal() {
 
     let apertou_play = false;
 
+    const musica1 = new Audio('sons/Flying - Track Tribe.mp3');
+    musica1.volume = 0.4;
+    const musica2 = new Audio('sons/Hidden Frozen Lake - Go By Ocean _ Ryan McCaffrey.mp3');
+    const musica3 = new Audio('sons/Outreach - Go By Ocean _ Ryan McCaffrey.mp3');
+    const musica4 = new Audio('sons/Speak The Truth - Go By Ocean _ Ryan McCaffrey.mp3');
+    const som_tiro = new Audio('sons/Laser Gun.mp3');
+    const som_explosão_forte = new Audio('sons/Big Explosion Cut Off.mp3');
+    const som_municao = new Audio('sons/Beep Short .mp3');
+    const som_grito = new Audio('sons/Death Impact Yell Single.mp3');
+
     function handleClique(event) {
         let largura = 300;
         let altura = 100;
@@ -126,15 +136,22 @@ function principal() {
 
     function verificar_colisao(){
         let cont = 1; // para identificar o meteoro gigante
+        // objetos atingindo nave
         for (obj of objetos){
             if ( (obj.x <= nave.x + nave.imagem.width) && ( (nave.y >= obj.y && nave.y <= obj.y + obj.imagem.height) || (nave.y + nave.imagem.height <= obj.y + obj.imagem.height && nave.y + nave.imagem.height >=  obj.y) ) ) {
                 if (cont != 4) {
+                    som_explosão_forte.play();
                     nave.nave_atingida = true;
                 } else {
+                    som_municao.play();
                     nave.municao += 3;
                     obj.eh_municao = true;
                 }
+                if (cont == 1) {
+                    som_grito.play();
+                }
             }
+            // tiro atingindo objetos
             if ( (obj.x <= nave.pos_x_tiro + nave.imagem_tiro.width) && ( (nave.altura_tiro >= obj.y && nave.altura_tiro <= obj.y + obj.imagem.height) || (nave.altura_tiro + nave.imagem_tiro.height <= obj.y + obj.imagem.height && nave.altura_tiro + nave.imagem_tiro.height >=  obj.y) ) ) {
                 nave.tiro_acertou = true;
                 if (cont != 6 && cont != 4) { // o meteoro gigante é o único que ignora o tiro
@@ -231,6 +248,7 @@ function principal() {
     }
     
     function rodar_jogo() {
+        musica1.play();
         if(apertou_play == false) {
             carregar_menu();
         }
@@ -303,6 +321,7 @@ function principal() {
                 if (this.pode_atirar == true) {
                     if (this.atirou == false) {
                         // carrega o tiro
+                        som_tiro.play();
                         this.altura_tiro  = this.y + 20;
                         this.pos_x_tiro = this.x + 85;
                     }
