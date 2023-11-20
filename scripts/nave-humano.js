@@ -148,7 +148,13 @@ function principal() {
 
         atirar() {
             if (this.pode_atirar == true) {
-                this.atirou = true;
+                if (this.atirou == false) {
+                    this.altura_tiro  = this.y + 20;
+                    this.pos_x_tiro = this.x + 85;
+                }
+                if (this.pos_x_tiro <= canvas.width) {
+                    this.atirou = true;
+                }
             }
             if (this.atirou == true) {
                 ctx.fillStyle = 'white';
