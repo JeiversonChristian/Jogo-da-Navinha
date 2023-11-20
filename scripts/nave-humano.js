@@ -254,6 +254,16 @@ function principal() {
             } else if (this.y < y_inicial_nave) {
                 this.y += this.in;
             }
+
+            if(this.nave_atingida == true){
+                // tira a posição do tiro da tela pra ele não influenciar na colisão
+                this.altura_tiro  = -10
+                this.pos_x_tiro = -10
+
+                // tira a posição da nave da tela pra ele não influenciar na colisão
+                this.x = -10;
+                this.y = -10; 
+            }
         }
 
         atirar() {
@@ -281,16 +291,16 @@ function principal() {
                     // tira uma munição
                     this.municao -= 1;
                     // tira a posição do tiro da tela pra ele não influenciar na colisão
-                    this.altura_tiro  = -1
-                    this.pos_x_tiro = -1
+                    this.altura_tiro  = -10
+                    this.pos_x_tiro = -10
                 }
 
                 if (this.pos_x_tiro > canvas.width) {
                     this.atirou = false;
                     this.tiro_acertou = false;
                     this.municao -= 1;
-                    this.altura_tiro  = -1
-                    this.pos_x_tiro = -1
+                    this.altura_tiro  = -10
+                    this.pos_x_tiro = -10
                 }
             }
         }
