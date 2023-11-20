@@ -136,6 +136,7 @@ function principal() {
             this.tiro_acertou = false;
             this.imagem_tiro = new Image();
             this.imagem_tiro.src = src_tiro;
+            this.municao = 3;
         }
 
         desenhar() {
@@ -152,34 +153,44 @@ function principal() {
             } else if (this.y < y_inicial_nave) {
                 this.y += this.in;
             }
-
-            if (this.pos_x_tiro > canvas.width) {
-                this.atirou = false;
-                this.tiro_acertou = false;
-            }
         }
 
         atirar() {
-            if (this.pode_atirar == true) {
-                if (this.atirou == false) {
-                    this.altura_tiro  = this.y + 20;
-                    this.pos_x_tiro = this.x + 85;
+            if (this.municao > 0) {
+                if (this.pode_atirar == true) {
+                    if (this.atirou == false) {
+                        // carrega o tiro
+                        this.altura_tiro  = this.y + 20;
+                        this.pos_x_tiro = this.x + 85;
+                    }
+                    if (this.pos_x_tiro <= canvas.width) {
+                        this.atirou = true;
+                    }
                 }
-                if (this.pos_x_tiro <= canvas.width) {
-                    this.atirou = true;
+                
+                if (this.atirou == true && this.tiro_acertou == false) {
+                    ctx.drawImage(this.imagem_tiro, this.pos_x_tiro, this.altura_tiro);
+                    this.pos_x_tiro += this.vt;
                 }
-            }
-            
-            if (this.atirou == true && this.tiro_acertou == false) {
-                ctx.drawImage(this.imagem_tiro, this.pos_x_tiro, this.altura_tiro);
-                this.pos_x_tiro += this.vt;
-            }
 
-            if (this.tiro_acertou == true) {
-                this.tiro_acertou = false;
-                this.altura_tiro  = this.y + 20;
-                this.pos_x_tiro = this.x + 85;
-                this.atirou = false;
+                if (this.tiro_acertou == true) {
+                    // reseta a condição
+                    this.tiro_acertou = false;
+                    this.atirou = false;
+                    // tira uma munição
+                    this.municao -= 1;
+                    // tira a posição do tiro da tela pra ele não influenciar na colisão
+                    this.altura_tiro  = -1
+                    this.pos_x_tiro = -1
+                }
+
+                if (this.pos_x_tiro > canvas.width) {
+                    this.atirou = false;
+                    this.tiro_acertou = false;
+                    this.municao -= 1;
+                    this.altura_tiro  = -1
+                    this.pos_x_tiro = -1
+                }
             }
         }
     }
