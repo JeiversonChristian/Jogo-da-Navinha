@@ -48,14 +48,18 @@ function principal() {
     }
 
     function verificar_colisao(){
+        let cont = 1; // para identificar o meteoro gigante
         for (obj of objetos){
             if ( (obj.x <= nave.x + nave.imagem.width) && ( (nave.y >= obj.y && nave.y <= obj.y + obj.imagem.height) || (nave.y + nave.imagem.height <= obj.y + obj.imagem.height && nave.y + nave.imagem.height >=  obj.y) ) ) {
                 nave.nave_atingida = true;
             }
             if ( (obj.x <= nave.pos_x_tiro + nave.imagem_tiro.width) && ( (nave.altura_tiro >= obj.y && nave.altura_tiro <= obj.y + obj.imagem.height) || (nave.altura_tiro + nave.imagem_tiro.height <= obj.y + obj.imagem.height && nave.altura_tiro + nave.imagem_tiro.height >=  obj.y) ) ) {
                 nave.tiro_acertou = true;
-                obj.tiro_acertou = true;
+                if (cont != 5) { // o meteoro gigante é o único que ignora o tiro
+                    obj.tiro_acertou = true;
+                }
             } 
+            cont ++;
         }
     }
 
