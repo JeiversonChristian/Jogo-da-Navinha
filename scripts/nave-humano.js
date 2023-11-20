@@ -12,8 +12,8 @@ function principal() {
     let i = 1; // contador para utilizar na distância percorrida
 
     let src_nave = "imagens/nave-humano.png";
-    let x_inicial_nave = 10;
-    let y_inicial_nave = canvas.height-53;
+    let x_inicial_nave = 60;
+    let y_inicial_nave = canvas.height-80;
     let impulso_nave = 5;
     let src_tiro = "imagens/tiro.png"
 
@@ -170,8 +170,8 @@ function principal() {
             this.nave_atingida = false;
             this.pode_atirar = false;
             this.atirou = false;
-            this.altura_tiro  = this.y + 20;
-            this.pos_x_tiro = this.x + 85;
+            this.altura_tiro;
+            this.pos_x_tiro;
             this.vt = 5;
             this.tiro_acertou = false;
             this.imagem_tiro = new Image();
@@ -196,7 +196,7 @@ function principal() {
         }
 
         atirar() {
-            if (this.municao > 0) {
+            if (this.municao > 0 && this.nave_atingida == false) {
                 if (this.pode_atirar == true) {
                     if (this.atirou == false) {
                         // carrega o tiro
