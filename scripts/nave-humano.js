@@ -108,12 +108,14 @@ function principal() {
     }
 
     function atualizar_dificuldade() {
-        distancia_percorrida += 1;
-        if (distancia_percorrida == 1000*i && i <= 7) {
-            i += 1;
-            taxa_dificuldade += 0.25;
-            for (obj of objetos) {
-                obj.v += taxa_dificuldade;
+        if (nave.nave_atingida == false) {
+            distancia_percorrida += 1;
+            if (distancia_percorrida == 1000*i && i <= 7) {
+                i += 1;
+                taxa_dificuldade += 0.25;
+                for (obj of objetos) {
+                    obj.v += taxa_dificuldade;
+                }
             }
         }
     }
@@ -211,7 +213,9 @@ function principal() {
             desenhar_fundo();
             desenhar_objetos();
             verificar_teclas();
-            atualizar_todas_posicoes();
+            if (nave.nave_atingida == false){
+                atualizar_todas_posicoes();
+            }
             atualizar_info();
         }
         setTimeout(rodar_jogo, 60); 
