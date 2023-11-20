@@ -56,6 +56,57 @@ function principal() {
     const imagemFundo = new Image();
     imagemFundo.src = 'imagens/universo.png';
 
+    let apertou_play = false;
+
+    function handleClique(event) {
+        let largura = 300;
+        let altura = 100;
+        let x = (canvas.width - largura) / 2;
+        let y = (canvas.height - altura) / 2;
+
+        const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+        const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+
+        // Verifica se o clique ocorreu dentro das coordenadas do retângulo
+        if (mouseX >= x && mouseX <= x + largura && mouseY >= y && mouseY <= y + altura) {
+            apertou_play = true;
+        }
+    }
+
+    function desenharBotao() {
+        desenhar_fundo();
+
+        // Desenha um retângulo com bordas normais
+        ctx.fillStyle = "black";
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 5;
+
+        // Coordenadas do retângulo
+        let largura = 300;
+        let altura = 100;
+        let x = (canvas.width - largura) / 2;
+        let y = (canvas.height - altura) / 2;
+
+        // Desenha as linhas do retângulo
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + largura, y);
+        ctx.lineTo(x + largura, y + altura);
+        ctx.lineTo(x, y + altura);
+        ctx.closePath();
+
+        // Preenche e desenha as bordas do retângulo
+        ctx.fill();
+        ctx.stroke();
+
+        // Adiciona texto "PLAY" no centro do retângulo
+        ctx.fillStyle = "white";
+        ctx.font = "30px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("PLAY", canvas.width / 2, canvas.height / 2);
+    }
+
     function atualizar_dificuldade() {
         distancia_percorrida += 1;
         if (distancia_percorrida == 1000*i && i <= 7) {
@@ -145,14 +196,24 @@ function principal() {
         Munição: ${nave.municao}`, canvasInfo.width / 2, canvasInfo.height / 2);
     }
 
+    function carregar_menu() {
+        desenharBotao();
+        canvas.addEventListener('mousedown', handleClique);  
+    }
+    
     function rodar_jogo() {
-        atualizar_dificuldade();
-        verificar_colisao();
-        desenhar_fundo();
-        desenhar_objetos();
-        verificar_teclas();
-        atualizar_todas_posicoes();
-        atualizar_info();
+        if(apertou_play == false){
+            carregar_menu();
+        }
+        if(apertou_play == true) {     
+            atualizar_dificuldade();
+            verificar_colisao();
+            desenhar_fundo();
+            desenhar_objetos();
+            verificar_teclas();
+            atualizar_todas_posicoes();
+            atualizar_info();
+        }
         setTimeout(rodar_jogo, 60); 
     }
     
