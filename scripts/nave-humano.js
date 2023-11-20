@@ -52,7 +52,10 @@ function principal() {
             if ( (obj.x <= nave.x + nave.imagem.width) && ( (nave.y >= obj.y && nave.y <= obj.y + obj.imagem.height) || (nave.y + nave.imagem.height <= obj.y + obj.imagem.height && nave.y + nave.imagem.height >=  obj.y) ) ) {
                 nave.nave_atingida = true;
             }
-
+            if ( (obj.x <= nave.pos_x_tiro + nave.imagem_tiro.width) && ( (nave.altura_tiro >= obj.y && nave.altura_tiro <= obj.y + obj.imagem.height) || (nave.altura_tiro + nave.imagem_tiro.height <= obj.y + obj.imagem.height && nave.altura_tiro + nave.imagem_tiro.height >=  obj.y) ) ) {
+                nave.tiro_acertou = true;
+                obj.tiro_acertou = true;
+            } 
         }
     }
 
@@ -148,6 +151,7 @@ function principal() {
 
             if (this.pos_x_tiro > canvas.width) {
                 this.atirou = false;
+                this.tiro_acertou = false;
             }
         }
 
@@ -161,9 +165,17 @@ function principal() {
                     this.atirou = true;
                 }
             }
-            if (this.atirou == true) {
+            
+            if (this.atirou == true && this.tiro_acertou == false) {
                 ctx.drawImage(this.imagem_tiro, this.pos_x_tiro, this.altura_tiro);
                 this.pos_x_tiro += this.vt;
+            }
+
+            if (this.tiro_acertou == true) {
+                this.tiro_acertou = false;
+                this.altura_tiro  = this.y + 20;
+                this.pos_x_tiro = this.x + 85;
+                this.atirou = false;
             }
         }
     }
@@ -190,6 +202,7 @@ function principal() {
             if ((this.x + this.imagem.width < -5) || (this.tiro_acertou == true)) {
                 this.x = gerar_n_aleatorio(canvas.width, this.t*canvas.width);
                 this.y = gerar_n_aleatorio(0, canvas.height-85+1);
+                this.tiro_acertou = false;
             }
         }
     }
