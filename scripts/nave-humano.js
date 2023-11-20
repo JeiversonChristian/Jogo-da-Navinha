@@ -4,6 +4,13 @@ function principal() {
     let canvas = window.document.getElementById("canvasPrincipal");
     let ctx = canvas.getContext("2d");
 
+    let canvasInfo = window.document.getElementById("canvasInfo");
+    let ctxInfo = canvasInfo.getContext("2d");
+
+    let distancia_percorrida = 0;
+    let taxa_dificuldade = 0;
+    let i = 3; // contador para utilizar na distância percorrida
+
     let src_nave = "imagens/nave-humano.png";
     let x_inicial_nave = 10;
     let y_inicial_nave = canvas.height-53;
@@ -48,6 +55,17 @@ function principal() {
 
     const imagemFundo = new Image();
     imagemFundo.src = 'imagens/universo.png';
+
+    function atualizar_dificuldade() {
+        distancia_percorrida += 10;
+        if (distancia_percorrida == 10**i && i < 6) {
+            i += 1;
+            taxa_dificuldade += 2;
+            for (obj of objetos) {
+                obj.v += taxa_dificuldade;
+            }
+        }
+    }
 
     function gerar_n_aleatorio(min, max) {
         return Math.floor(Math.random() * (max - min) + min);
@@ -118,12 +136,23 @@ function principal() {
         }
     }
 
+    function atualizar_info() {
+        ctxInfo.clearRect(0, 0, canvasInfo.width, canvasInfo.height);
+        ctxInfo.font = "20px Arial";
+        ctxInfo.fillStyle = "blue";
+        ctxInfo.textAlign = "center";
+        ctxInfo.fillText(`Distância percorrida: ${distancia_percorrida} |
+        Munição: ${nave.municao}`, canvasInfo.width / 2, canvasInfo.height / 2);
+    }
+
     function rodar_jogo() {
+        atualizar_dificuldade();
         verificar_colisao();
         desenhar_fundo();
         desenhar_objetos();
         verificar_teclas();
         atualizar_todas_posicoes();
+        atualizar_info();
         setTimeout(rodar_jogo, 60); 
     }
     

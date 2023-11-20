@@ -11,14 +11,26 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            flex-direction: column;
         }
+
         canvas {
+            display: block;
+            margin: 5px;
+        }
+
+        canvas#canvasPrincipal {
             background-color: black;
+        }
+
+        canvas#canvasInfo {
+            border: 3px solid black;
         }
     </style>
 </head>
 <body>
     <canvas id="canvasPrincipal" width="1300" height="300"></canvas>
+    <canvas id="canvasInfo" width="800" height="100"></canvas>
     <script src="scripts/nave-humano.js"></script>
 </body>
 </html>
