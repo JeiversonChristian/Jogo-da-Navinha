@@ -292,12 +292,22 @@ function principal() {
         distancia_percorrida = 0;
     }
 
+    function limparCache() {
+        if ('caches' in window) {
+            caches.keys().then(function(cacheNames) {
+                return Promise.all(cacheNames.map(function(cacheName) {
+                    return caches.delete(cacheName);
+                }));
+            });
+        }
+    }
+
     function resetar_game() {
+        limparCache();
         apertou_play = false;
         resetar_nave();
         resetar_objetos();
         resetar_dados();
-
     }
 
     function aumentar_volume() {
