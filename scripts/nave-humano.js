@@ -371,6 +371,10 @@ function principal() {
 
     function tocar_musica() {
         musica.play();
+        musica.addEventListener('ended', function() {
+            this.currentTime = 0; // Reinicia a reprodução do início quando acaba
+            this.play();
+        });
     }
     
     function rodar_jogo() {
