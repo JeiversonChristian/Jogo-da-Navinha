@@ -14,44 +14,44 @@ function principal() {
     let src_nave = "imagens/nave-humano.png";
     let x_inicial_nave = 60;
     let y_inicial_nave = canvas.height-80;
-    let impulso_nave = 5;
+    let impulso_nave = 5; //5
     let src_tiro = "imagens/tiro.png"
 
     let src_meteoro1 = "imagens/meteoro1.png";
     let taxa_meteoro1 = 1.5;
     let x_inicial_meteroro1 = gerar_n_aleatorio(canvas.width, taxa_meteoro1*canvas.width);
     let y_inicial_meteoro1 = gerar_n_aleatorio(0, canvas.height-85+1);
-    let v_meteoro1 = 5;
+    let v_meteoro1 = 5; //5
 
     let src_meteoro2 = "imagens/meteoro2.png";
     let taxa_meteoro2 = 7;
     let x_inicial_meteroro2 = gerar_n_aleatorio(canvas.width, taxa_meteoro2*canvas.width);
     let y_inicial_meteoro2 = gerar_n_aleatorio(0, canvas.height-85+1);
-    let v_meteoro2 = 0.5;
+    let v_meteoro2 = 0.5; //0.5
 
     let src_meteoro3 = "imagens/meteoro3.png";
     let taxa_meteoro3 = 10;
     let x_inicial_meteroro3 = gerar_n_aleatorio(canvas.width, taxa_meteoro3*canvas.width);
     let y_inicial_meteoro3 = gerar_n_aleatorio(0, canvas.height-85+1);
-    let v_meteoro3 = 9;
+    let v_meteoro3 = 9; //9
 
     let src_satelite = "imagens/satelite.png";
     let taxa_satelite = 5;
     let x_inicial_satelite = gerar_n_aleatorio(canvas.width, taxa_satelite*canvas.width);
     let y_inicial_satelite = gerar_n_aleatorio(0, canvas.height-85+1);
-    let v_satelite = 3;
+    let v_satelite = 3; //3
 
     let src_astronauta = "imagens/astronauta.png";
     let taxa_astronauta = 6;
     let x_inicial_astronauta = gerar_n_aleatorio(canvas.width, taxa_astronauta*canvas.width);
     let y_inicial_astronauta = gerar_n_aleatorio(0, canvas.height-85+1);
-    let v_astronauta = 1;
+    let v_astronauta = 1; //1
 
     let src_municao = "imagens/municao.png"
     let taxa_municao = 9;
     let x_inicial_municao = gerar_n_aleatorio(canvas.width, taxa_satelite*canvas.width);
     let y_inicial_municao = gerar_n_aleatorio(0, canvas.height-85+1);
-    let v_municao = 2;
+    let v_municao = 2; //2
 
     const imagemFundo = new Image();
     imagemFundo.src = 'imagens/universo.png';
@@ -125,7 +125,7 @@ function principal() {
             distancia_percorrida += 1;
             if (distancia_percorrida == 1000*i && i <= 7) {
                 i += 1;
-                taxa_dificuldade += 0.25;
+                taxa_dificuldade += 0.12;//0.25
                 for (obj of objetos) {
                     obj.v += taxa_dificuldade;
                 }
@@ -140,7 +140,7 @@ function principal() {
     function verificar_colisao(){
         let cont = 1; // para identificar o meteoro gigante
         // objetos atingindo nave
-        for (obj of objetos){
+        for (obj of objetos) {
             if ( (obj.x <= nave.x + nave.imagem.width) && ( (nave.y >= obj.y && nave.y <= obj.y + obj.imagem.height) || (nave.y + nave.imagem.height <= obj.y + obj.imagem.height && nave.y + nave.imagem.height >=  obj.y) ) ) {
                 if (cont != 4) {
                     som_explosão_forte.play();
@@ -177,71 +177,59 @@ function principal() {
         }   
     }
 
+    let space_acionado = false;
+    let k_acionado = false;
     let seta_direita_acionada = false;
     let seta_esquerda_acionada = false;
 
     function verificar_teclas() {
+
         window.addEventListener('keydown', function (event) {
-            if (event.code === 'Space') {
+            if (event.code === 'Space' && !space_acionado) {
+                space_acionado = true;
                 nave.nave_pulando = true;
             }
-        });
-
-        window.addEventListener('keyup', function (event) {
-            if (event.code === 'Space') {
-                nave.nave_pulando = false;
-            }
-        });
-
-        window.addEventListener('keydown', function (event) {
-            if (event.key === 'k') {
+            if (event.key === 'k' && !k_acionado) {
+                k_acionado = true;
                 nave.pode_atirar = true;
             }
-        });
-
-        window.addEventListener('keyup', function (event) {
-            if (event.key === 'k') {
-                nave.pode_atirar = false;
-            }
-        });
-
-        window.addEventListener('keydown', function (event) {
             if (event.key === 'ArrowUp') {
                 aumentar_volume();
             }
-        });
-
-        window.addEventListener('keydown', function (event) {
             if (event.key === 'ArrowDown') {
                 diminuir_volume();
             }
-        });
-
-        window.addEventListener('keydown', function (event) {
             if (event.key === 'ArrowRight' && !seta_direita_acionada) {
                 seta_direita_acionada = true;
                 trocar_para_proxima_musica();
             }
-        });
-        document.addEventListener('keyup', function(event) {
-            if (event.key === 'ArrowRight') {
-                // Redefine a variável de controle quando a tecla é liberada
-                seta_direita_acionada = false;
-            }
-        });
-
-        window.addEventListener('keydown', function (event) {
             if (event.key === 'ArrowLeft' && !seta_esquerda_acionada) {
                 seta_esquerda_acionada = true;
                 trocar_para_anterior_musica();
             }
         });
-        document.addEventListener('keyup', function(event) {
+        
+        window.addEventListener('keyup', function (event) {
+            if (event.code === 'Space') {
+                // Redefine a variável de controle quando a tecla é liberada
+                space_acionado = false;
+                nave.nave_pulando = false;
+            }
+            if (event.key === 'k') {
+                // Redefine a variável de controle quando a tecla é liberada
+                k_acionado = false;
+                nave.pode_atirar = false;
+            }
+            if (event.key === 'ArrowRight') {
+                // Redefine a variável de controle quando a tecla é liberada
+                seta_direita_acionada = false;
+            }    
             if (event.key === 'ArrowLeft') {
                 // Redefine a variável de controle quando a tecla é liberada
                 seta_esquerda_acionada = false;
-            }
+            }        
         });
+
     }
 
 
@@ -406,6 +394,7 @@ function principal() {
                 resetar_game();
             }
         }
+        //requestAnimationFrame(rodar_jogo);
         setTimeout(rodar_jogo, 60); 
     }
     
@@ -418,7 +407,7 @@ function principal() {
             this.x = x;
             this.y = y;
             this.i = i;
-            this.in = 3; // impulso negativo
+            this.in = 3; // impulso negativo 3
             this.nave_pulando = false;
             this.nave_atingida = false;
             this.pode_atirar = false;
@@ -514,7 +503,9 @@ function principal() {
         }
         
         desenhar() {
-            ctx.drawImage(this.imagem, this.x, this.y);
+            if(this.x <= canvas.width){
+                ctx.drawImage(this.imagem, this.x, this.y);
+            }
         }
         
         atualizar_posicao() {
