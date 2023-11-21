@@ -265,6 +265,7 @@ function principal() {
         ctxInfo.fillText(`Atirar: Aperte [k]`, 465, 70);
         ctxInfo.fillText(`Aumentar / Diminuir música [↑][↓]`, 800, 40);
         ctxInfo.fillText(`Trocar de música [←][→]`, 770, 70);
+        ctxInfo.fillText(`Se tiver travando muito, recarregue a página [↻]`, canvasInfo.width / 2, 120);
     }
 
     function carregar_menu() {
