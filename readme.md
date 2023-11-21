@@ -4,4 +4,4 @@
 <h3>Sobreviva ao percurso pelo espaço sideral.</h3>
 <h3>Teste o jogo <a href="https://jeiversonchristian.github.io/Jogo-da-Navinha/">aqui</a>.</h3>
 <hr>
-<img src="imagens/jogo.png" alt="Primeiro mascote do Android">
+<img src="imagens/jogo.png" alt="Imagem do jogo">
