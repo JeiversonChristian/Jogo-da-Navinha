@@ -208,7 +208,7 @@ function principal() {
                 trocar_para_anterior_musica();
             }
         });
-        
+
         window.addEventListener('keyup', function (event) {
             if (event.code === 'Space') {
                 // Redefine a variável de controle quando a tecla é liberada
@@ -243,7 +243,7 @@ function principal() {
     function atualizar_info() {
         ctxInfo.clearRect(0, 0, canvasInfo.width, canvasInfo.height);
         ctxInfo.font = "20px Arial";
-        ctxInfo.fillStyle = "black";
+        ctxInfo.fillStyle = "white";
         ctxInfo.textAlign = "center";
         ctxInfo.fillText(`Distância percorrida:`, 150, 40);
         ctxInfo.fillText(`${distancia_percorrida}km`, 290, 40);
