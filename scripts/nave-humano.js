@@ -299,14 +299,14 @@ function principal() {
     }
 
     function aumentar_volume() {
-        if (musica1.volume < 1.0) {
-            musica1.volume += 0.0001;
+        if (musica.volume < 1.0) {
+            musica.volume += 0.0001;
         }
     }
 
     function diminuir_volume() {
-        if (musica1.volume > 0.0) {
-            musica1.volume -= 0.0001;
+        if (musica.volume > 0.0) {
+            musica.volume -= 0.0001;
         }
     }
 
