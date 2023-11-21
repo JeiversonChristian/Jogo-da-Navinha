@@ -24,7 +24,7 @@ function principal() {
     let v_meteoro1 = 5; //5
 
     let src_meteoro2 = "imagens/meteoro2.png";
-    let taxa_meteoro2 = 7;
+    let taxa_meteoro2 = 3;
     let x_inicial_meteroro2 = gerar_n_aleatorio(canvas.width, taxa_meteoro2*canvas.width);
     let y_inicial_meteoro2 = gerar_n_aleatorio(0, canvas.height-85+1);
     let v_meteoro2 = 0.5; //0.5
